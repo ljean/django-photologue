@@ -1,14 +1,20 @@
 from django.contrib import admin
 from models import *
 
-class GalleryAdmin(admin.ModelAdmin):
+if 'modeltranslation' in settings.INSTALLED_APPS:
+    from modeltranslation.admin import TranslationAdmin
+    BaseAdminClass = TranslationAdmin
+else:
+    BaseAdminClass = admin.ModelAdmin
+    
+class GalleryAdmin(BaseAdminClass):
     list_display = ('title', 'date_added', 'photo_count', 'is_public')
     list_filter = ['date_added', 'is_public']
     date_hierarchy = 'date_added'
     prepopulated_fields = {'title_slug': ('title',)}
     filter_horizontal = ('photos',)
 
-class PhotoAdmin(admin.ModelAdmin):
+class PhotoAdmin(BaseAdminClass):
     list_display = ('title', 'date_taken', 'date_added', 'is_public', 'tags', 'view_count', 'admin_thumbnail')
     list_filter = ['date_added', 'is_public']
     search_fields = ['title', 'title_slug', 'caption']
