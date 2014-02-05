@@ -8,71 +8,73 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Gallery.title_fr'
-        db.add_column('photologue_gallery', 'title_fr',
-                      self.gf('django.db.models.fields.CharField')(max_length=50, unique=True, null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'Gallery.title_en'
-        db.add_column('photologue_gallery', 'title_en',
-                      self.gf('django.db.models.fields.CharField')(max_length=50, unique=True, null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'Gallery.description_fr'
-        db.add_column('photologue_gallery', 'description_fr',
-                      self.gf('django.db.models.fields.TextField')(null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'Gallery.description_en'
-        db.add_column('photologue_gallery', 'description_en',
-                      self.gf('django.db.models.fields.TextField')(null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'Photo.title_fr'
-        db.add_column('photologue_photo', 'title_fr',
-                      self.gf('django.db.models.fields.CharField')(max_length=50, unique=True, null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'Photo.title_en'
-        db.add_column('photologue_photo', 'title_en',
-                      self.gf('django.db.models.fields.CharField')(max_length=50, unique=True, null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'Photo.caption_fr'
-        db.add_column('photologue_photo', 'caption_fr',
-                      self.gf('django.db.models.fields.TextField')(null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'Photo.caption_en'
-        db.add_column('photologue_photo', 'caption_en',
-                      self.gf('django.db.models.fields.TextField')(null=True, blank=True),
-                      keep_default=False)
+        pass
+        ## Adding field 'Gallery.title_fr'
+        #db.add_column('photologue_gallery', 'title_fr',
+        #              self.gf('django.db.models.fields.CharField')(max_length=50, unique=True, null=True, blank=True),
+        #              keep_default=False)
+        #
+        ## Adding field 'Gallery.title_en'
+        #db.add_column('photologue_gallery', 'title_en',
+        #              self.gf('django.db.models.fields.CharField')(max_length=50, unique=True, null=True, blank=True),
+        #              keep_default=False)
+        #
+        ## Adding field 'Gallery.description_fr'
+        #db.add_column('photologue_gallery', 'description_fr',
+        #              self.gf('django.db.models.fields.TextField')(null=True, blank=True),
+        #              keep_default=False)
+        #
+        ## Adding field 'Gallery.description_en'
+        #db.add_column('photologue_gallery', 'description_en',
+        #              self.gf('django.db.models.fields.TextField')(null=True, blank=True),
+        #              keep_default=False)
+        #
+        ## Adding field 'Photo.title_fr'
+        #db.add_column('photologue_photo', 'title_fr',
+        #              self.gf('django.db.models.fields.CharField')(max_length=50, unique=True, null=True, blank=True),
+        #              keep_default=False)
+        #
+        ## Adding field 'Photo.title_en'
+        #db.add_column('photologue_photo', 'title_en',
+        #              self.gf('django.db.models.fields.CharField')(max_length=50, unique=True, null=True, blank=True),
+        #              keep_default=False)
+        #
+        ## Adding field 'Photo.caption_fr'
+        #db.add_column('photologue_photo', 'caption_fr',
+        #              self.gf('django.db.models.fields.TextField')(null=True, blank=True),
+        #              keep_default=False)
+        #
+        ## Adding field 'Photo.caption_en'
+        #db.add_column('photologue_photo', 'caption_en',
+        #              self.gf('django.db.models.fields.TextField')(null=True, blank=True),
+        #              keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting field 'Gallery.title_fr'
-        db.delete_column('photologue_gallery', 'title_fr')
-
-        # Deleting field 'Gallery.title_en'
-        db.delete_column('photologue_gallery', 'title_en')
-
-        # Deleting field 'Gallery.description_fr'
-        db.delete_column('photologue_gallery', 'description_fr')
-
-        # Deleting field 'Gallery.description_en'
-        db.delete_column('photologue_gallery', 'description_en')
-
-        # Deleting field 'Photo.title_fr'
-        db.delete_column('photologue_photo', 'title_fr')
-
-        # Deleting field 'Photo.title_en'
-        db.delete_column('photologue_photo', 'title_en')
-
-        # Deleting field 'Photo.caption_fr'
-        db.delete_column('photologue_photo', 'caption_fr')
-
-        # Deleting field 'Photo.caption_en'
-        db.delete_column('photologue_photo', 'caption_en')
+        pass
+        ## Deleting field 'Gallery.title_fr'
+        #db.delete_column('photologue_gallery', 'title_fr')
+        #
+        ## Deleting field 'Gallery.title_en'
+        #db.delete_column('photologue_gallery', 'title_en')
+        #
+        ## Deleting field 'Gallery.description_fr'
+        #db.delete_column('photologue_gallery', 'description_fr')
+        #
+        ## Deleting field 'Gallery.description_en'
+        #db.delete_column('photologue_gallery', 'description_en')
+        #
+        ## Deleting field 'Photo.title_fr'
+        #db.delete_column('photologue_photo', 'title_fr')
+        #
+        ## Deleting field 'Photo.title_en'
+        #db.delete_column('photologue_photo', 'title_en')
+        #
+        ## Deleting field 'Photo.caption_fr'
+        #db.delete_column('photologue_photo', 'caption_fr')
+        #
+        ## Deleting field 'Photo.caption_en'
+        #db.delete_column('photologue_photo', 'caption_en')
 
 
     models = {
@@ -87,8 +89,6 @@ class Migration(SchemaMigration):
             'photos': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'galleries'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['photologue.Photo']"}),
             'tags': ('photologue.models.TagField', [], {'max_length': '255', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'}),
-            'title_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True', 'null': 'True', 'blank': 'True'}),
-            'title_fr': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True', 'null': 'True', 'blank': 'True'}),
             'title_slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'})
         },
         'photologue.galleryupload': {
@@ -105,8 +105,6 @@ class Migration(SchemaMigration):
         'photologue.photo': {
             'Meta': {'ordering': "['-date_added']", 'object_name': 'Photo'},
             'caption': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'caption_en': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'caption_fr': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'crop_from': ('django.db.models.fields.CharField', [], {'default': "'center'", 'max_length': '10', 'blank': 'True'}),
             'date_added': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'date_taken': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
@@ -116,8 +114,6 @@ class Migration(SchemaMigration):
             'is_public': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'tags': ('photologue.models.TagField', [], {'max_length': '255', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'}),
-            'title_en': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True', 'null': 'True', 'blank': 'True'}),
-            'title_fr': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True', 'null': 'True', 'blank': 'True'}),
             'title_slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'}),
             'view_count': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'})
         },
