@@ -12,7 +12,8 @@ register = template.Library()
 
 @register.filter
 def first_in_gallery(photo, gallery):
-    return (None == photo.get_previous_in_gallery(gallery))
+    return gallery.photos.first() == photo
+    #return (None == photo.get_previous_in_gallery(gallery))
 
 @register.filter
 def max_height(gallery, size="display"):

@@ -1,5 +1,5 @@
 {% extends "photologue/root.html" %}
-{% load i18n %}{% load url from future %}
+{% load i18n pl_extra_tags %}{% load url from future %}
 
 {% block title %}{% trans "Latest Photo Galleries" %}{% endblock %}
 
@@ -11,7 +11,9 @@
         <h2><a href="{{ gallery.get_absolute_url }}">{{ gallery.title }}</a></h2>
         {% for photo in gallery.sample %}
         <div class="gallery-photo">
-            <a href="{{ photo.get_absolute_url }}"><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}"/></a>
+            <a href="{{ gallery.get_absolute_url }}{% if not photo|first_in_gallery:gallery %}#{{ photo.id }}{% endif %}">
+                <img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}"/>
+            </a>
         </div>
         {% endfor %}
     </div>
