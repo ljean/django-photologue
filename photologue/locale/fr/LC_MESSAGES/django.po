@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Photologue\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-20 15:51+0100\n"
+"POT-Creation-Date: 2014-03-20 17:14+0100\n"
 "PO-Revision-Date: 2013-10-27 15:52+0000\n"
 "Last-Translator: richardbarran <richard@arbee-design.co.uk>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/django-photologue/"
@@ -17,6 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: coop_bar_cfg.py:28
+msgid "Photologue: Gallery admin"
+msgstr "Photologue: Admin de la galerie"
+
+#: coop_bar_cfg.py:35
+msgid "Photologue: Gallery upload"
+msgstr "Photologue: charger une galerie"
 
 #: models.py:54
 msgid "Separate tags with spaces, put quotes around multiple-word tags."
@@ -186,8 +194,9 @@ msgstr ""
 msgid ""
 "Select a gallery to add these images to. Leave this empty to create a new "
 "gallery from the supplied title."
-msgstr "Choisssez une galerie pour ajouter ces images. Laisser vide pour créer une nouvelle galerie "
-"avec le titre donné."
+msgstr ""
+"Choisssez une galerie pour ajouter ces images. Laisser vide pour créer une "
+"nouvelle galerie avec le titre donné."
 
 #: models.py:245 models.py:634
 msgid "caption"
@@ -229,7 +238,8 @@ msgid ""
 "Ignoring file \"{filename}\" as it is in a subfolder; all images should be "
 "in the top folder of the zip."
 msgstr ""
-"Le fichier \"{filename}\" a été ignoré car il est dans un sous-dossier; les images doivent être dans le dossier racine du zip."
+"Le fichier \"{filename}\" a été ignoré car il est dans un sous-dossier; les "
+"images doivent être dans le dossier racine du zip."
 
 #: models.py:332
 #, python-format
@@ -237,7 +247,8 @@ msgid ""
 "Did not create photo \"%(filename)s\" with slug \"{1}\" as a photo with that "
 "slug already exists."
 msgstr ""
-"Ne créez pas la photo \"%(filename)s\" avec le slug \"{1}\" qui existe déjà pour une autre photo."
+"Ne créez pas la photo \"%(filename)s\" avec le slug \"{1}\" qui existe déjà "
+"pour une autre photo."
 
 #: models.py:358
 msgid "Could not process file \"{0}\" in the .zip archive."
@@ -538,8 +549,8 @@ msgstr "Toutes les galeries"
 
 #: contrib/bootstrap/templates/photologue/gallery_list.html:37
 #: contrib/bootstrap/templates/photologue/gallery_list.html:39
-#: contrib/galleriffic/templates/photologue/gallery_detail.html:56
-#: contrib/galleriffic/templates/photologue/gallery_list.html:32
+#: contrib/galleriffic/templates/photologue/gallery_detail.html:58
+#: contrib/galleriffic/templates/photologue/gallery_list.html:34
 #: contrib/galleriffic/templates/photologue/photo_list.html:21
 msgid "Previous"
 msgstr "Précédent"
@@ -557,8 +568,8 @@ msgstr ""
 
 #: contrib/bootstrap/templates/photologue/gallery_list.html:47
 #: contrib/bootstrap/templates/photologue/gallery_list.html:49
-#: contrib/galleriffic/templates/photologue/gallery_detail.html:57
-#: contrib/galleriffic/templates/photologue/gallery_list.html:34
+#: contrib/galleriffic/templates/photologue/gallery_detail.html:59
+#: contrib/galleriffic/templates/photologue/gallery_list.html:36
 #: contrib/galleriffic/templates/photologue/photo_list.html:23
 msgid "Next"
 msgstr "Suivant"
@@ -567,14 +578,14 @@ msgstr "Suivant"
 msgid "This photo is found in the following galleries"
 msgstr "Cette photo a été trouvé dans les galeries suivantes"
 
-#: contrib/galleriffic/templates/photologue/gallery_archive.html:20
+#: contrib/galleriffic/templates/photologue/gallery_archive.html:22
 #: contrib/galleriffic/templates/photologue/gallery_archive_day.html:20
 #: contrib/galleriffic/templates/photologue/gallery_archive_month.html:20
 #: contrib/galleriffic/templates/photologue/gallery_list.html:25
 msgid "No galleries were found."
 msgstr "Aucune galerie"
 
-#: contrib/galleriffic/templates/photologue/gallery_archive.html:23
+#: contrib/galleriffic/templates/photologue/gallery_archive.html:25
 #: contrib/galleriffic/templates/photologue/gallery_archive_day.html:23
 #: contrib/galleriffic/templates/photologue/gallery_archive_month.html:23
 #: contrib/galleriffic/templates/photologue/gallery_archive_year.html:14
@@ -593,31 +604,31 @@ msgstr "Galeries de"
 msgid "Photos"
 msgstr "Photos"
 
-#: contrib/galleriffic/templates/photologue/gallery_detail.html:54
+#: contrib/galleriffic/templates/photologue/gallery_detail.html:56
 msgid "Play"
 msgstr "Lancer le diaporama"
 
-#: contrib/galleriffic/templates/photologue/gallery_detail.html:55
+#: contrib/galleriffic/templates/photologue/gallery_detail.html:57
 msgid "Pause"
 msgstr "Mettre le diaporama en pause"
 
-#: contrib/galleriffic/templates/photologue/gallery_detail.html:58
+#: contrib/galleriffic/templates/photologue/gallery_detail.html:60
 msgid "Next page"
 msgstr "Page suivante"
 
-#: contrib/galleriffic/templates/photologue/gallery_detail.html:59
+#: contrib/galleriffic/templates/photologue/gallery_detail.html:61
 msgid "Previous page"
 msgstr "Page précédente"
 
-#: contrib/galleriffic/templates/photologue/gallery_detail.html:91
+#: contrib/galleriffic/templates/photologue/gallery_detail.html:93
 msgid "Media"
 msgstr "Media"
 
-#: contrib/galleriffic/templates/photologue/gallery_list.html:30
+#: contrib/galleriffic/templates/photologue/gallery_list.html:32
 msgid "galleries total."
 msgstr "galleries au total"
 
-#: contrib/galleriffic/templates/photologue/gallery_list.html:33
+#: contrib/galleriffic/templates/photologue/gallery_list.html:35
 #: contrib/galleriffic/templates/photologue/photo_list.html:22
 #, python-format
 msgid "page %(page)s of %(pages)s"
