@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block extra_head %}
+    <script type="text/javascript">
+        $(function() {
+            $("ul.filter-menu li").each(function(idx, elt){
+                if (
+                    $(elt).find('a').attr('href') == '???') {
+                    $(elt).addClass('selected');
+                }
+            });
+        })
+    </script>
+    {{ block.super }}
+{% endblock %}
+
+
+{% block document %}
+<div class="row">
+  <div class="col-md-12">
+	<div class="">
+	  {% block pl_content %}{% endblock %}
+	</div>
+  </div>
+</div>
+{% endblock %}
