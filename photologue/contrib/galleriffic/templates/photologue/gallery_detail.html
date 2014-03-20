@@ -97,24 +97,27 @@
     <div class="galleriffic">
         <!-- Start Advanced Gallery Html Containers -->
         <div id="thumbs" class="navigation">
-                <ul class="thumbs noscript">
-                    {% for photo in gallery.public %}
-                    <li>
-                        <a class="thumb" name="{{ photo.id }}" title="{{ photo.title }}" href="{{ photo.get_display_url }}"><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}"/></a>
-                        <div class="caption">
-                            <div class="download">
-                                <a download="{{ photo.image.url|basename }}" href="{{ photo.image.url }}">
-                                    <span class="glyphicon glyphicon-floppy-save"></span>
-                                </a>&nbsp;
-                            </div>
-                            <div class="image-title" title="">
-                                {{ photo.title }}
-                                <div class="mini-caption">{{ photo.caption }}</div>
-                            </div>
+            <ul class="thumbs noscript">
+                {% for photo in gallery.public %}
+                <li>
+                    <a class="thumb" name="{{ photo.id }}" title="{{ photo.title }}" href="{{ photo.get_display_url }}"><img src="{{ photo.get_thumbnail_url }}" alt="{{ photo.title }}"/></a>
+                    <div class="caption">
+                        <div class="download">
+                            <a download="{{ photo.image.url|basename }}" href="{{ photo.image.url }}">
+                                <span class="glyphicon glyphicon-floppy-save"></span>
+                            </a>&nbsp;
                         </div>
-                    </li>
-                    {% endfor %}
-                </ul>
+                        <div class="image-title" title="">
+                            {{ photo.title }}
+                            <div class="mini-caption">{{ photo.caption }}</div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="gallery-description">
+                {{ gallery.description }}
+            </div>
         </div>
         
         <div id="gallery" class="content">
