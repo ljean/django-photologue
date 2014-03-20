@@ -1,17 +1,79 @@
 Changelog for django-photologue
 ===============================
 
-2.6 (unreleased)
+2.8 (unreleased)
 ----------------
 
-Please note:
+Upgrade notes:
+
+1.  You will have to install django-sortedm2m - please refer to installation instructions. 
+
+List of changes:
+
+- Photologue now uses django-sortedm2m to sort photos in a gallery.
+- PHOTOLOGUE_USE_CKEDITOR, PHOTOLOGUE_GALLERY_PAGINATE_BY and PHOTOLOGUE_PHOTO_PAGINATE_BY are deprecated.
+- Major rewrite of zip archive uploader: warn users of files that could not be processed,
+  get code to work with Python 3 (issue #71), add extra error handling.
+- Renamed field title_slug to slug - this allows us to simplify views.py a bit.
+- Fixed pagination controls for photo list template.
+- Tightened naming rules for Photosize names.
+- Fixed a couple of unicode-related bugs.
+- Added to the documentation pages describing how to customise the admin and the views.
+- Refactored slightly views.py.
+
+2.7 (2013-10-27)
+----------------
+
+Upgrade notes:
+
+1. All settings are now prefixed with 'PHOTOLOGUE_'. Please check that you are not
+affected by this.
+
+List of changes:
+
+- Fixed issue #56, Gallery pagination is broken.
+- Photologue now works with Python 3.
+- Added a set of templates that work well with Twitter-Bootstrap 3, and used
+  them for the 'example_project'.
+- Fixed issue #64 (allow installation without installing Pillow).
+- Optional use of CKEditor.
+- Updated/news translations for Polish, Slovak and German.
+- Bugfix: allow viewing latest galleries/latest photos pages even if they 
+  are empty.
+- Started using factory-boy - makes unit tests a bit easier to read.
+- Added settings to customise pagination count on list pages.
+- Documented all settings.
+- All settings are now prefixed with 'PHOTOLOGUE_'.
+
+2.6.1 (2013-05-19)
+------------------
+
+List of changes:
+
+- Fixed broken packaging in release 2.6.
+
+2.6 (2013-05-19)
+----------------
+
+Upgrade notes:
 
 1. Photologue now relies on Pillow instead of PIL. The easiest way to upgrade is
 to remove PIL completely, then install the new version of Photologue.
+2. Photologue, in line with Django itself, has dropped support for Django 1.3.
 
-- Switched from PIL to Pillow - hopefully this should make installing to new
-  environments easier.
+List of changes:
 
+- Switched from PIL to Pillow - hopefully this should make installation easier.
+- Initial setup of data: removed plinit and replaced it with a South data migration.
+- Added feature to allow extending the built-in templates (and documented it!).
+- Allow editing of Photo added date (temp way of sorting photos).
+- Added an example project to help people wanting to contribute to the project.
+- Fixed buggy Travis CI script.
+- fixed issue #52, transactions in migration
+- fixed issue #51, uniqueness collisions in migration
+- Accessing the root url (usually /photologue/ will now redirect you to the gallery list view.
+- Photologue requires min. Django 1.4.
+- Tidied a data validator on PhotoSizes.
 
 2.5 (2012-12-13)
 ----------------
@@ -29,7 +91,7 @@ to remove PIL completely, then install the new version of Photologue.
 2.4 (2012-08-13)
 ----------------
 
-Please note:
+Upgrade notes:
 
 1. Starting with this version, Photologue uses South to manage the database schema.
 If you are upgrading an existing Photologue installation, please follow the

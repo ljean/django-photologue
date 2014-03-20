@@ -19,8 +19,13 @@ Contents:
 .. toctree::
     :maxdepth: 2
 
-    essentials/installation
-    essentials/contributing
+    pages/installation
+    pages/customising/templates
+    pages/customising/settings
+    pages/customising/admin
+    pages/customising/views
+    pages/customising/contrib    
+    pages/contributing
 
 Indices and tables
 ==================

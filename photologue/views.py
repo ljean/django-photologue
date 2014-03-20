@@ -1,63 +1,95 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from django.conf import settings
 from django.views.generic.dates import ArchiveIndexView, DateDetailView, DayArchiveView, MonthArchiveView, YearArchiveView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-from photologue.models import Photo, Gallery
+from .models import Photo, Gallery
 
-class PhotoView(object):
-    queryset = Photo.objects.filter(is_public=True)
+# Number of galleries to display per page.
+GALLERY_PAGINATE_BY = getattr(settings, 'PHOTOLOGUE_GALLERY_PAGINATE_BY', 20)
 
-class PhotoListView(PhotoView, ListView):
-    paginate_by = 20
+if GALLERY_PAGINATE_BY != 20:
+    import warnings
+    warnings.warn(
+        DeprecationWarning('PHOTOLOGUE_GALLERY_PAGINATE_BY setting will be removed in Photologue 3.0'))
 
-class PhotoDetailView(PhotoView, DetailView):
-    slug_field = 'title_slug'
+# Number of photos to display per page.
+PHOTO_PAGINATE_BY = getattr(settings, 'PHOTOLOGUE_PHOTO_PAGINATE_BY', 20)
 
-class PhotoDateView(PhotoView):
-    date_field = 'date_added'
+if PHOTO_PAGINATE_BY != 20:
+    import warnings
+    warnings.warn(
+        DeprecationWarning('PHOTOLOGUE_PHOTO_PAGINATE_BY setting will be removed in Photologue 3.0'))
 
-class PhotoDateDetailView(PhotoDateView, DateDetailView):
-    slug_field = 'title_slug'
-
-class PhotoArchiveIndexView(PhotoDateView, ArchiveIndexView):
-    pass
-
-class PhotoDayArchiveView(PhotoDateView, DayArchiveView):
-    pass
-
-class PhotoMonthArchiveView(PhotoDateView, MonthArchiveView):
-    pass
-
-class PhotoYearArchiveView(PhotoDateView, YearArchiveView):
-    pass
+# Gallery views.
 
 
-#gallery Views
-class GalleryView(object):
+class GalleryListView(ListView):
+    queryset = Gallery.objects.filter(is_public=True)
+    paginate_by = GALLERY_PAGINATE_BY
+
+
+class GalleryDetailView(DetailView):
     queryset = Gallery.objects.filter(is_public=True)
 
-class GalleryListView(GalleryView, ListView):
-    paginate_by = 20
 
-class GalleryDetailView(GalleryView, DetailView):
-    slug_field = 'title_slug'
-
-class GalleryDateView(GalleryView):
+class GalleryDateView(object):
+    queryset = Gallery.objects.filter(is_public=True)
     date_field = 'date_added'
+    allow_empty = True
+
 
 class GalleryDateDetailView(GalleryDateView, DateDetailView):
-    slug_field = 'title_slug'
+    pass
+
 
 class GalleryArchiveIndexView(GalleryDateView, ArchiveIndexView):
     pass
 
+
 class GalleryDayArchiveView(GalleryDateView, DayArchiveView):
     pass
+
 
 class GalleryMonthArchiveView(GalleryDateView, MonthArchiveView):
     pass
 
+
 class GalleryYearArchiveView(GalleryDateView, YearArchiveView):
+    pass
+
+# Photo views.
+
+
+class PhotoListView(ListView):
+    queryset = Photo.objects.filter(is_public=True)
+    paginate_by = PHOTO_PAGINATE_BY
+
+
+class PhotoDetailView(DetailView):
+    queryset = Photo.objects.filter(is_public=True)
+
+
+class PhotoDateView(object):
+    queryset = Photo.objects.filter(is_public=True)
+    date_field = 'date_added'
+    allow_empty = True
+
+
+class PhotoDateDetailView(PhotoDateView, DateDetailView):
+    pass
+
+
+class PhotoArchiveIndexView(PhotoDateView, ArchiveIndexView):
+    pass
+
+
+class PhotoDayArchiveView(PhotoDateView, DayArchiveView):
+    pass
+
+
+class PhotoMonthArchiveView(PhotoDateView, MonthArchiveView):
+    pass
+
+
+class PhotoYearArchiveView(PhotoDateView, YearArchiveView):
     pass
