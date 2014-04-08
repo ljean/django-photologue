@@ -20,9 +20,12 @@ def max_height(gallery, size="display"):
     max_val = 0
     for photo in gallery.photos.all():
         photo_filename = getattr(photo, "get_{0}_filename".format(size))()
-        img = Image.open(photo_filename)
-        (w, h) = img.size
-        max_val = max(max_val, h)
+        try:
+            img = Image.open(photo_filename)
+            (w, h) = img.size
+            max_val = max(max_val, h)
+        except IOError:
+            pass
     return max_val
     
 @register.filter
