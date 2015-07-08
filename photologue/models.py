@@ -6,6 +6,7 @@ from inspect import isclass
 import warnings
 import logging
 from io import BytesIO
+import unicodedata
 
 from django.utils.timezone import now
 from django.db import models
@@ -109,35 +110,35 @@ else:
 
 # Quality options for JPEG images
 JPEG_QUALITY_CHOICES = (
-    (30, _('Very Low')),
-    (40, _('Low')),
-    (50, _('Medium-Low')),
-    (60, _('Medium')),
-    (70, _('Medium-High')),
-    (80, _('High')),
-    (90, _('Very High')),
+    (30, _(u'Very Low')),
+    (40, _(u'Low')),
+    (50, _(u'Medium-Low')),
+    (60, _(u'Medium')),
+    (70, _(u'Medium-High')),
+    (80, _(u'High')),
+    (90, _(u'Very High')),
 )
 
 # choices for new crop_anchor field in Photo
 CROP_ANCHOR_CHOICES = (
-    ('top', _('Top')),
-    ('right', _('Right')),
-    ('bottom', _('Bottom')),
-    ('left', _('Left')),
-    ('center', _('Center (Default)')),
+    ('top', _(u'Top')),
+    ('right', _(u'Right')),
+    ('bottom', _(u'Bottom')),
+    ('left', _(u'Left')),
+    ('center', _(u'Center (Default)')),
 )
 
 IMAGE_TRANSPOSE_CHOICES = (
-    ('FLIP_LEFT_RIGHT', _('Flip left to right')),
-    ('FLIP_TOP_BOTTOM', _('Flip top to bottom')),
-    ('ROTATE_90', _('Rotate 90 degrees counter-clockwise')),
-    ('ROTATE_270', _('Rotate 90 degrees clockwise')),
-    ('ROTATE_180', _('Rotate 180 degrees')),
+    ('FLIP_LEFT_RIGHT', _(u'Flip left to right')),
+    ('FLIP_TOP_BOTTOM', _(u'Flip top to bottom')),
+    ('ROTATE_90', _(u'Rotate 90 degrees counter-clockwise')),
+    ('ROTATE_270', _(u'Rotate 90 degrees clockwise')),
+    ('ROTATE_180', _(u'Rotate 180 degrees')),
 )
 
 WATERMARK_STYLE_CHOICES = (
-    ('tile', _('Tile')),
-    ('scale', _('Scale')),
+    ('tile', _(u'Tile')),
+    ('scale', _(u'Scale')),
 )
 
 # Prepare a list of image filters
@@ -148,7 +149,7 @@ for n in dir(ImageFilter):
         hasattr(klass, 'name'):
         filter_names.append(klass.__name__)
 IMAGE_FILTERS_HELP_TEXT = _(
-    'Chain multiple filters using the following pattern "FILTER_ONE->FILTER_TWO->FILTER_THREE". Image filters will be applied in order. The following filters are available: %s.' % (', '.join(filter_names)))
+    u'Chain multiple filters using the following pattern "FILTER_ONE->FILTER_TWO->FILTER_THREE". Image filters will be applied in order. The following filters are available: %s.' % (', '.join(filter_names)))
 
 
 @python_2_unicode_compatible
@@ -160,12 +161,12 @@ class Gallery(models.Model):
                              unique=True)
     slug = models.SlugField(_('title slug'),
                             unique=True,
-                            help_text=_('A "slug" is a unique URL-friendly title for an object.'))
+                            help_text=_(u'A "slug" is a unique URL-friendly title for an object.'))
     description = models.TextField(_('description'),
                                    blank=True)
     is_public = models.BooleanField(_('is public'),
                                     default=True,
-                                    help_text=_('Public galleries will be displayed '
+                                    help_text=_(u'Public galleries will be displayed '
                                     'in the default views.'))
     photos = SortedManyToManyField('Photo',
                                    related_name='galleries',
@@ -224,34 +225,34 @@ class Gallery(models.Model):
     @property
     def title_slug(self):
         warnings.warn(
-            DeprecationWarning("`title_slug` field in Gallery is being renamed to `slug`. Update your code."))
+            DeprecationWarning(u"`title_slug` field in Gallery is being renamed to `slug`. Update your code."))
         return self.slug
 
 
 class GalleryUpload(models.Model):
     zip_file = models.FileField(_('images file (.zip)'),
                                 upload_to=os.path.join(PHOTOLOGUE_DIR, 'temp'),
-                                help_text=_('Select a .zip file of images to upload into a new Gallery.'))
+                                help_text=_(u'Select a .zip file of images to upload into a new Gallery.'))
     title = models.CharField(_('title'),
                              max_length=50,
-                             help_text=_('All uploaded photos will be given a title made up of this title + a '
-                                         'sequential number.'))
+                             help_text=_(u'All uploaded photos will be given a title made up of this title + a '
+                                         u'sequential number.'))
     gallery = models.ForeignKey(Gallery,
                                 verbose_name=_('gallery'),
                                 null=True,
                                 blank=True,
-                                help_text=_('Select a gallery to add these images to. Leave this empty to '
-                                            'create a new gallery from the supplied title.'))
+                                help_text=_(u'Select a gallery to add these images to. Leave this empty to '
+                                            u'create a new gallery from the supplied title.'))
     caption = models.TextField(_('caption'),
                                blank=True,
-                               help_text=_('Caption will be added to all photos.'))
+                               help_text=_(u'Caption will be added to all photos.'))
     description = models.TextField(_('description'),
                                    blank=True,
-                                   help_text=_('A description of this Gallery.'))
+                                   help_text=_(u'A description of this Gallery.'))
     is_public = models.BooleanField(_('is public'),
                                     default=True,
-                                    help_text=_('Uncheck this to make the uploaded '
-                                                'gallery and included photographs private.'))
+                                    help_text=_(u'Uncheck this to make the uploaded '
+                                                u'gallery and included photographs private.'))
     tags = models.CharField(max_length=255,
                             blank=True,
                             help_text=tagfield_help_text,
@@ -271,11 +272,11 @@ class GalleryUpload(models.Model):
         if self.title:
             try:
                 Gallery.objects.get(title=self.title)
-                raise ValidationError(_('A gallery with that title already exists.'))
+                raise ValidationError(_(u'A gallery with that title already exists.'))
             except Gallery.DoesNotExist:
                 pass
         if not self.gallery and not self.title:
-            raise ValidationError(_('Select an existing gallery or enter a new gallery name.'))
+            raise ValidationError(_(u'Select an existing gallery or enter a new gallery name.'))
 
     def process_zipfile(self):
         if os.path.isfile(self.zip_file.path):
@@ -284,53 +285,54 @@ class GalleryUpload(models.Model):
             bad_file = zip.testzip()
             if bad_file:
                 zip.close()
-                raise Exception('"%s" in the .zip archive is corrupt.' % bad_file)
+                raise Exception(u'"%s" in the .zip archive is corrupt.' % bad_file)
             count = 1
             if self.gallery:
-                logger.debug('Using pre-existing gallery.')
+                logger.debug(u'Using pre-existing gallery.')
                 gallery = self.gallery
             else:
-                logger.debug('Creating new gallery "{0}".'.format(self.title))
+                logger.debug(u'Creating new gallery "{0}".'.format(self.title))
                 gallery = Gallery.objects.create(title=self.title,
                                                  slug=slugify(self.title),
                                                  description=self.description,
                                                  is_public=self.is_public,
                                                  tags=self.tags)
             for filename in sorted(zip.namelist()):
-
-                logger.debug('Reading file "{0}".'.format(filename))
+                safe_filename = filename.decode('iso-8859-15')
+                safe_filename = unicodedata.normalize('NFKD', unicode(safe_filename)).encode('ascii', 'ignore')
+                #logger.debug(u'Reading file "{0}".'.format(filename))
 
                 if filename.startswith('__') or filename.startswith('.'):
-                    logger.debug('Ignoring file "{0}".'.format(filename))
+                    #logger.debug(u'Ignoring file "{0}".'.format(filename))
                     continue
 
                 if os.path.dirname(filename):
-                    logger.warning('Ignoring file "{0}" as it is in a subfolder; all images should be in the top '
-                                   'folder of the zip.'.format(filename))
+                    #logger.warning(u'Ignoring file "{0}" as it is in a subfolder; all images should be in the top '
+                    #               u'folder of the zip.'.format(filename))
                     if getattr(self, 'request', None):
                         messages.warning(self.request,
-                                         _('Ignoring file "{filename}" as it is in a subfolder; all images should '
-                                           'be in the top folder of the zip.').format(filename=filename),
+                                         _(u'Ignoring file "{filename}" as it is in a subfolder; all images should '
+                                           u'be in the top folder of the zip.').format(filename=safe_filename),
                                          fail_silently=True)
                     continue
 
                 data = zip.read(filename)
 
                 if not len(data):
-                    logger.debug('File "{0}" is empty.'.format(filename))
+                    #logger.debug(u'File "{0}" is empty.'.format(filename))
                     continue
 
-                title = ' '.join([self.title, str(count)])
+                title = u' '.join([self.title, str(count)])
                 slug = slugify(title)
 
                 try:
                     Photo.objects.get(slug=slug)
-                    logger.warning('Did not create photo "{0}" with slug "{1}" as a photo with that '
-                                   'slug already exists.'.format(filename, slug))
+                    #logger.warning(u'Did not create photo "{0}" with slug "{1}" as a photo with that '
+                    #               u'slug already exists.'.format(filename, slug))
                     if getattr(self, 'request', None):
                         messages.warning(self.request,
-                                         _('Did not create photo "%(filename)s" with slug "{1}" as a photo with that '
-                                           'slug already exists.').format(filename, slug),
+                                         _(u'Did not create photo "%(filename)s" with slug "{1}" as a photo with that '
+                                           u'slug already exists.').format(safe_filename, slug),
                                          fail_silently=True)
                     continue
                 except Photo.DoesNotExist:
@@ -351,17 +353,17 @@ class GalleryUpload(models.Model):
                     # Pillow (or PIL) doesn't recognize it as an image.
                     # If a "bad" file is found we just skip it.
                     # But we do flag this both in the logs and to the user.
-                    logger.error('Could not process file "{0}" in the .zip archive.'.format(
-                        filename))
+                    #logger.error(u'Could not process file "{0}" in the .zip archive.'.format(
+                    #    filename))
                     if getattr(self, 'request', None):
                         messages.warning(self.request,
-                                         _('Could not process file "{0}" in the .zip archive.').format(
+                                         _(u'Could not process file "{0}" in the .zip archive.').format(
                                          filename,
                                          fail_silently=True))
                     continue
 
                 contentfile = ContentFile(data)
-                photo.image.save(filename, contentfile)
+                photo.image.save(safe_filename, contentfile)
                 photo.save()
                 gallery.photos.add(photo)
                 count = count + 1
@@ -408,7 +410,7 @@ class ImageModel(models.Model):
     def admin_thumbnail(self):
         func = getattr(self, 'get_admin_thumbnail_url', None)
         if func is None:
-            return _('An "admin_thumbnail" photo size has not been defined.')
+            return _(u'An "admin_thumbnail" photo size has not been defined.')
         else:
             if hasattr(self, 'get_absolute_url'):
                 return u'<a href="%s"><img src="%s"></a>' % \
@@ -630,14 +632,14 @@ class Photo(ImageModel):
                              unique=True)
     slug = models.SlugField(_('slug'),
                             unique=True,
-                            help_text=_('A "slug" is a unique URL-friendly title for an object.'))
+                            help_text=_(u'A "slug" is a unique URL-friendly title for an object.'))
     caption = models.TextField(_('caption'),
                                blank=True)
     date_added = models.DateTimeField(_('date added'),
                                       default=now)
     is_public = models.BooleanField(_('is public'),
                                     default=True,
-                                    help_text=_('Public photographs will be displayed in the default views.'))
+                                    help_text=_(u'Public photographs will be displayed in the default views.'))
     tags = TagField(help_text=tagfield_help_text, verbose_name=_('tags'))
 
     class Meta:
@@ -678,7 +680,7 @@ class Photo(ImageModel):
     @property
     def title_slug(self):
         warnings.warn(
-            DeprecationWarning("`title_slug` field in Photo is being renamed to `slug`. Update your code."))
+            DeprecationWarning(u"`title_slug` field in Photo is being renamed to `slug`. Update your code."))
         return self.slug
 
 
@@ -709,7 +711,7 @@ class BaseEffect(models.Model):
             im = Image.open(SAMPLE_IMAGE_PATH)
         except IOError:
             raise IOError(
-                'Photologue was unable to open the sample image: %s.' % SAMPLE_IMAGE_PATH)
+                u'Photologue was unable to open the sample image: %s.' % SAMPLE_IMAGE_PATH)
         im = self.process(im)
         im.save(self.sample_filename(), 'JPEG', quality=90, optimize=True)
 
@@ -764,30 +766,30 @@ class PhotoEffect(BaseEffect):
                                         choices=IMAGE_TRANSPOSE_CHOICES)
     color = models.FloatField(_('color'),
                               default=1.0,
-                              help_text=_("A factor of 0.0 gives a black and white image, a factor of 1.0 gives the original image."))
+                              help_text=_(u"A factor of 0.0 gives a black and white image, a factor of 1.0 gives the original image."))
     brightness = models.FloatField(_('brightness'),
                                    default=1.0,
-                                   help_text=_("A factor of 0.0 gives a black image, a factor of 1.0 gives the original image."))
+                                   help_text=_(u"A factor of 0.0 gives a black image, a factor of 1.0 gives the original image."))
     contrast = models.FloatField(_('contrast'),
                                  default=1.0,
-                                 help_text=_("A factor of 0.0 gives a solid grey image, a factor of 1.0 gives the original image."))
+                                 help_text=_(u"A factor of 0.0 gives a solid grey image, a factor of 1.0 gives the original image."))
     sharpness = models.FloatField(_('sharpness'),
                                   default=1.0,
-                                  help_text=_("A factor of 0.0 gives a blurred image, a factor of 1.0 gives the original image."))
+                                  help_text=_(u"A factor of 0.0 gives a blurred image, a factor of 1.0 gives the original image."))
     filters = models.CharField(_('filters'),
                                max_length=200,
                                blank=True,
                                help_text=_(IMAGE_FILTERS_HELP_TEXT))
     reflection_size = models.FloatField(_('size'),
                                         default=0,
-                                        help_text=_("The height of the reflection as a percentage of the orignal image. A factor of 0.0 adds no reflection, a factor of 1.0 adds a reflection equal to the height of the orignal image."))
+                                        help_text=_(u"The height of the reflection as a percentage of the orignal image. A factor of 0.0 adds no reflection, a factor of 1.0 adds a reflection equal to the height of the orignal image."))
     reflection_strength = models.FloatField(_('strength'),
                                             default=0.6,
-                                            help_text=_("The initial opacity of the reflection gradient."))
+                                            help_text=_(u"The initial opacity of the reflection gradient."))
     background_color = models.CharField(_('color'),
                                         max_length=7,
                                         default="#FFFFFF",
-                                        help_text=_("The background color of the reflection gradient. Set this to match the background color of your page."))
+                                        help_text=_(u"The background color of the reflection gradient. Set this to match the background color of your page."))
 
     class Meta:
         verbose_name = _("photo effect")
@@ -828,7 +830,7 @@ class Watermark(BaseEffect):
                              default='scale')
     opacity = models.FloatField(_('opacity'),
                                 default=1,
-                                help_text=_("The opacity of the overlay."))
+                                help_text=_(u"The opacity of the overlay."))
 
     class Meta:
         verbose_name = _('watermark')
@@ -850,33 +852,33 @@ class PhotoSize(models.Model):
                             max_length=40,
                             unique=True,
                             help_text=_(
-                                'Photo size name should contain only letters, numbers and underscores. Examples: "thumbnail", "display", "small", "main_page_widget".'),
+                                u'Photo size name should contain only letters, numbers and underscores. Examples: "thumbnail", "display", "small", "main_page_widget".'),
                             validators=[RegexValidator(regex='^[a-z0-9_]+$',
-                                                       message='Use only plain lowercase letters (ASCII), numbers and underscores.'
+                                                       message=u'Use only plain lowercase letters (ASCII), numbers and underscores.'
                                                        )]
                             )
     width = models.PositiveIntegerField(_('width'),
                                         default=0,
-                                        help_text=_('If width is set to "0" the image will be scaled to the supplied height.'))
+                                        help_text=_(u'If width is set to "0" the image will be scaled to the supplied height.'))
     height = models.PositiveIntegerField(_('height'),
                                          default=0,
-                                         help_text=_('If height is set to "0" the image will be scaled to the supplied width'))
+                                         help_text=_(u'If height is set to "0" the image will be scaled to the supplied width'))
     quality = models.PositiveIntegerField(_('quality'),
                                           choices=JPEG_QUALITY_CHOICES,
                                           default=70,
                                           help_text=_('JPEG image quality.'))
     upscale = models.BooleanField(_('upscale images?'),
                                   default=False,
-                                  help_text=_('If selected the image will be scaled up if necessary to fit the supplied dimensions. Cropped sizes will be upscaled regardless of this setting.'))
+                                  help_text=_(u'If selected the image will be scaled up if necessary to fit the supplied dimensions. Cropped sizes will be upscaled regardless of this setting.'))
     crop = models.BooleanField(_('crop to fit?'),
                                default=False,
-                               help_text=_('If selected the image will be scaled and cropped to fit the supplied dimensions.'))
+                               help_text=_(u'If selected the image will be scaled and cropped to fit the supplied dimensions.'))
     pre_cache = models.BooleanField(_('pre-cache?'),
                                     default=False,
-                                    help_text=_('If selected this photo size will be pre-cached as photos are added.'))
+                                    help_text=_(u'If selected this photo size will be pre-cached as photos are added.'))
     increment_count = models.BooleanField(_('increment view count?'),
                                           default=False,
-                                          help_text=_('If selected the image\'s "view_count" will be incremented when this photo size is displayed.'))
+                                          help_text=_(u'If selected the image\'s "view_count" will be incremented when this photo size is displayed.'))
     effect = models.ForeignKey('PhotoEffect',
                                null=True,
                                blank=True,
@@ -908,7 +910,7 @@ class PhotoSize(models.Model):
         if self.crop is True:
             if self.width == 0 or self.height == 0:
                 raise ValidationError(
-                    _("Can only crop photos if both width and height dimensions are set."))
+                    _(u"Can only crop photos if both width and height dimensions are set."))
 
     def save(self, *args, **kwargs):
         super(PhotoSize, self).save(*args, **kwargs)
