@@ -121,7 +121,6 @@ JPEG_QUALITY_CHOICES = (
 
 # Orientation necessary mapped to EXIF data
 IMAGE_EXIF_ORIENTATION_MAP = {
-    1: Image.ROTATE_90,
     3: Image.ROTATE_180,
     6: Image.ROTATE_270,
     8: Image.ROTATE_90,
