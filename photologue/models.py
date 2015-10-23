@@ -121,12 +121,11 @@ JPEG_QUALITY_CHOICES = (
 
 # Orientation necessary mapped to EXIF data
 IMAGE_EXIF_ORIENTATION_MAP = {
-    1: 0,
-    8: 2,
-    3: 3,
-    6: 4,
+    1: Image.ROTATE_90,
+    3: Image.ROTATE_180,
+    6: Image.ROTATE_270,
+    8: Image.ROTATE_90,
 }
-
 
 # choices for new crop_anchor field in Photo
 CROP_ANCHOR_CHOICES = (
@@ -532,7 +531,13 @@ class ImageModel(models.Model):
             im = im.resize(new_dimensions, Image.ANTIALIAS)
         # Rotate if found & necessary
         if self.EXIF.get('Image Orientation', None) is not None:
-            im = im.transpose(IMAGE_EXIF_ORIENTATION_MAP[self.EXIF.get('Image Orientation', 1).values[0]])
+            try:
+                orientation_key = self.EXIF.get('Image Orientation', 1).values[0]
+                orientation = IMAGE_EXIF_ORIENTATION_MAP[orientation_key]
+                im = im.transpose(orientation)
+            except (KeyError, IndexError):
+                pass
+
         return im
 
     def create_size(self, photosize):
