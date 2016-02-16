@@ -1,4 +1,4 @@
-from django.conf.urls import *
+from django.conf.urls import url
 from django.views.generic import RedirectView
 from django.core.urlresolvers import reverse_lazy
 
@@ -8,7 +8,7 @@ from .views import PhotoListView, PhotoDetailView, GalleryListView, \
     GalleryDateDetailView, GalleryDayArchiveView, GalleryMonthArchiveView
 
 
-urlpatterns = patterns('',
+urlpatterns = [
 
     url(r'^gallery/(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<day>\w{1,2})/(?P<slug>[\-\d\w]+)/$',
         GalleryDateDetailView.as_view(),
@@ -54,6 +54,6 @@ urlpatterns = patterns('',
         PhotoListView.as_view(),
         name='pl-photo-list'),
 
-)
+]
 
 

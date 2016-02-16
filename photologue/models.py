@@ -1,3 +1,4 @@
+from importlib import import_module
 import os
 import random
 import zipfile
@@ -23,7 +24,6 @@ except ImportError:
     from django.utils.encoding import force_unicode as force_text
 from django.utils.encoding import smart_str, filepath_to_uri
 from django.utils.functional import curry
-from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 from django.core.validators import RegexValidator
@@ -178,7 +178,6 @@ class Gallery(models.Model):
     photos = SortedManyToManyField('Photo',
                                    related_name='galleries',
                                    verbose_name=_('photos'),
-                                   null=True,
                                    blank=True)
     tags = TagField(help_text=tagfield_help_text, verbose_name=_('tags'))
 
