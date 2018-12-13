@@ -60,7 +60,7 @@ class PhotoNode(template.Node):
 
     def render(self, context):
         try:
-            a = template.resolve_variable(self.photo, context)
+            a = template.Variable(self.photo).resolve(context)
         except:
             a = self.photo
         if isinstance(a, Photo):
@@ -107,8 +107,8 @@ class PhotoGalleryNode(template.Node):
 
     def render(self, context):
         try:
-            a = template.resolve_variable(self.gallery, context)
-        except:
+            a = template.Variable(self.gallery).resolve(context)
+        except Exception as err:
             a = self.gallery
         if isinstance(a, Gallery):
             g = a
