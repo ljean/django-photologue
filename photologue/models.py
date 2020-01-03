@@ -14,7 +14,7 @@ from django.db import models
 from django.db.models.signals import post_init
 from django.conf import settings
 from django.core.files.base import ContentFile
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.exceptions import ValidationError
 from django.template.defaultfilters import slugify
 try:
@@ -248,7 +248,9 @@ class GalleryUpload(models.Model):
                                 null=True,
                                 blank=True,
                                 help_text=_(u'Select a gallery to add these images to. Leave this empty to '
-                                            u'create a new gallery from the supplied title.'))
+                                            u'create a new gallery from the supplied title.'),
+                                on_delete=models.CASCADE
+                                )
     caption = models.TextField(_('caption'),
                                blank=True,
                                help_text=_(u'Caption will be added to all photos.'))
@@ -398,7 +400,7 @@ class ImageModel(models.Model):
                                null=True,
                                blank=True,
                                related_name="%(class)s_related",
-                               verbose_name=_('effect'))
+                               verbose_name=_('effect'), on_delete=models.CASCADE)
 
     class Meta:
         abstract = True
@@ -898,12 +900,12 @@ class PhotoSize(models.Model):
                                null=True,
                                blank=True,
                                related_name='photo_sizes',
-                               verbose_name=_('photo effect'))
+                               verbose_name=_('photo effect'), on_delete=models.CASCADE)
     watermark = models.ForeignKey('Watermark',
                                   null=True,
                                   blank=True,
                                   related_name='photo_sizes',
-                                  verbose_name=_('watermark image'))
+                                  verbose_name=_('watermark image'), on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['width', 'height']

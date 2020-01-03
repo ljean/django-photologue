@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(help_text='A description of this Gallery.', verbose_name='description', blank=True)),
                 ('is_public', models.BooleanField(default=True, help_text='Uncheck this to make the uploaded gallery and included photographs private.', verbose_name='is public')),
                 ('tags', models.CharField(help_text='Django-tagging was not found, tags will be treated as plain text.', max_length=255, verbose_name='tags', blank=True)),
-                ('gallery', models.ForeignKey(blank=True, to='photologue.Gallery', help_text='Select a gallery to add these images to. Leave this empty to create a new gallery from the supplied title.', null=True, verbose_name='gallery')),
+                ('gallery', models.ForeignKey(blank=True, to='photologue.Gallery', help_text='Select a gallery to add these images to. Leave this empty to create a new gallery from the supplied title.', null=True, verbose_name='gallery', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'gallery upload',
@@ -104,7 +104,7 @@ class Migration(migrations.Migration):
                 ('crop', models.BooleanField(default=False, help_text='If selected the image will be scaled and cropped to fit the supplied dimensions.', verbose_name='crop to fit?')),
                 ('pre_cache', models.BooleanField(default=False, help_text='If selected this photo size will be pre-cached as photos are added.', verbose_name='pre-cache?')),
                 ('increment_count', models.BooleanField(default=False, help_text='If selected the image\'s "view_count" will be incremented when this photo size is displayed.', verbose_name='increment view count?')),
-                ('effect', models.ForeignKey(related_name='photo_sizes', verbose_name='photo effect', blank=True, to='photologue.PhotoEffect', null=True)),
+                ('effect', models.ForeignKey(related_name='photo_sizes', verbose_name='photo effect', blank=True, to='photologue.PhotoEffect', null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ['width', 'height'],
@@ -130,12 +130,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='photosize',
             name='watermark',
-            field=models.ForeignKey(related_name='photo_sizes', verbose_name='watermark image', blank=True, to='photologue.Watermark', null=True),
+            field=models.ForeignKey(related_name='photo_sizes', verbose_name='watermark image', blank=True, to='photologue.Watermark', null=True, on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='photo',
             name='effect',
-            field=models.ForeignKey(related_name='photo_related', verbose_name='effect', blank=True, to='photologue.PhotoEffect', null=True),
+            field=models.ForeignKey(related_name='photo_related', verbose_name='effect', blank=True, to='photologue.PhotoEffect', null=True, on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='gallery',
